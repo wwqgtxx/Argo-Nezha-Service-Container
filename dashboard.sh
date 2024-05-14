@@ -523,7 +523,7 @@ IS_DOCKER=0
 EOF
 
   # 生成 backup.sh 文件的步骤2 - 在线获取 template/bakcup.sh 模板生成完整 backup.sh 文件
-  wget -qO- ${GH_PROXY}https://raw.githubusercontent.com/fscarmen2/Argo-Nezha-Service-Container/main/template/backup.sh | sed '1,/^########/d' >> ${WORK_DIR}/backup.sh
+  wget -qO- ${GH_PROXY}https://raw.githubusercontent.com/wwqgtxx/Argo-Nezha-Service-Container/main/template/backup.sh | sed '1,/^########/d' >> ${WORK_DIR}/backup.sh
 
   if [[ -n "$GH_BACKUP_USER" && -n "$GH_REPO" && -n "$GH_PAT" ]]; then
     # 生成还原数据脚本
@@ -547,7 +547,7 @@ IS_DOCKER=0
 ########
 EOF
     # 生成 restore.sh 文件的步骤2 - 在线获取 template/restore.sh 模板生成完整 restore.sh 文件
-    wget -qO- ${GH_PROXY}https://raw.githubusercontent.com/fscarmen2/Argo-Nezha-Service-Container/main/template/restore.sh | sed '1,/^########/d' >> ${WORK_DIR}/restore.sh
+    wget -qO- ${GH_PROXY}https://raw.githubusercontent.com/wwqgtxx/Argo-Nezha-Service-Container/main/template/restore.sh | sed '1,/^########/d' >> ${WORK_DIR}/restore.sh
   fi
 
   # 生成 renew.sh 文件的步骤1 - 设置环境变量
@@ -562,7 +562,7 @@ TEMP_DIR=/tmp/renew
 EOF
 
   # 生成 renew.sh 文件的步骤2 - 在线获取 template/renew.sh 模板生成完整 renew.sh 文件
-  wget -qO- ${GH_PROXY}https://raw.githubusercontent.com/fscarmen2/Argo-Nezha-Service-Container/main/template/renew.sh | sed '1,/^########/d' >> ${WORK_DIR}/renew.sh
+  wget -qO- ${GH_PROXY}https://raw.githubusercontent.com/wwqgtxx/Argo-Nezha-Service-Container/main/template/renew.sh | sed '1,/^########/d' >> ${WORK_DIR}/renew.sh
 
   # 生成定时任务: 1.每天北京时间 3:30:00 更新备份和还原文件，2.每天北京时间 4:00:00 备份一次，并重启 cron 服务； 3.每分钟自动检测在线备份文件里的内容
   if [ "$SYSTEM" = 'Alpine' ]; then
