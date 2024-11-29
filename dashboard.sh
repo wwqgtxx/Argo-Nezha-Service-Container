@@ -85,8 +85,8 @@ E[35]="Please add two Public hostnames to Cloudnflare Tunnel: \\\n 1. ----------
 C[35]="请在 Cloudnflare Tunnel 里增加两个 Public hostnames: \\\n 1. ------------------------ \\\n Public hostname: \$ARGO_DOMAIN \\\n Path: proto.NezhaService \\\n Type: HTTPS \\\n URL: localhost:\$GRPC_PROXY_PORT \\\n Additional application settings ---\> TLS: 开启 [No TLS Verify] 和 [HTTP2 connection] 这两处功能 \\\n\\\n 2. ------------------------ \\\n Public hostname: \$ARGO_DOMAIN \\\n Type: HTTP \\\n URL: localhost:\$WEB_PORT"
 E[36]="Downloading the \${FAILED[*]} failed. Installation aborted. Feedback: [https://github.com/fscarmen2/Argo-Nezha-Service-Container/issues]"
 C[36]="下载 \${FAILED[*]} 失败，安装中止，问题反馈:[https://github.com/fscarmen2/Argo-Nezha-Service-Container/issues]"
-E[37]="Install Nezha's official VPS or docker version (https://github.com/naiba/nezha)"
-C[37]="安装哪吒官方 VPS 或 Docker 版本 (https://github.com/naiba/nezha)"
+E[37]="Install Nezha's official VPS or docker version (https://github.com/wwqgtxx/nezha)"
+C[37]="安装哪吒官方 VPS 或 Docker 版本 (https://github.com/wwqgtxx/nezha)"
 E[38]="Please choose gRPC proxy mode:\n 1. Caddy (default)\n 2. Nginx\n 3. gRPCwebProxy"
 C[38]="请选择 gRPC 代理模式:\n 1. Caddy (默认)\n 2. Nginx\n 3. gRPCwebProxy"
 E[39]="To uninstall Nginx press [y], it is not uninstalled by default:"
@@ -156,8 +156,8 @@ check_install() {
 
   if [ "$STATUS" = "$(text 26)" ]; then
     { wget -qO $TEMP_DIR/cloudflared ${GH_PROXY}https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$ARCH >/dev/null 2>&1 && chmod +x $TEMP_DIR/cloudflared >/dev/null 2>&1; }&
-    { DASHBOARD_LATEST=$(wget -qO- "https://api.github.com/repos/naiba/nezha/releases/latest" | awk -F '"' '/"tag_name"/{print $4}' || echo 'v0.20.9')
-      wget -qO $TEMP_DIR/dashboard.zip ${GH_PROXY}https://github.com/naiba/nezha/releases/download/$DASHBOARD_LATEST/dashboard-linux-$ARCH.zip >/dev/null 2>&1; }&
+    { DASHBOARD_LATEST=$(wget -qO- "https://api.github.com/repos/wwqgtxx/nezha/releases/latest" | awk -F '"' '/"tag_name"/{print $4}' || echo 'v0.20.9')
+      wget -qO $TEMP_DIR/dashboard.zip ${GH_PROXY}https://github.com/wwqgtxx/nezha/releases/download/$DASHBOARD_LATEST/dashboard-linux-$ARCH.zip >/dev/null 2>&1; }&
   fi
 }
 
@@ -634,7 +634,7 @@ menu_setting() {
     OPTION[2]="2.  $(text 37)"
 
     ACTION[1]() { check_dependencies; install; exit; }
-    [ "$L" = 'C' ] && ACTION[2]() { curl -L https://jihulab.com/nezha/dashboard/-/raw/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && CN=true ./nezha.sh; exit; } || ACTION[2]() { curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh; exit; }
+    [ "$L" = 'C' ] && ACTION[2]() { curl -L https://raw.githubusercontent.com/wwqgtxx/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && CN=true ./nezha.sh; exit; } || ACTION[2]() { curl -L https://raw.githubusercontent.com/wwqgtxx/nezha/master/script/install_en.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh; exit; }
   fi
 }
 
