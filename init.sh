@@ -99,19 +99,13 @@ EOF
   fi
 
   # 下载需要的应用
-  if [ -z "$DASHBOARD_VERSION" ]; then
-    DASHBOARD_LATEST='v0.20.13'
-  elif [[ "$DASHBOARD_VERSION" =~ 0\.[0-9]{1,2}\.[0-9]{1,2}$ ]]; then
-    DASHBOARD_LATEST=$(sed 's/v//; s/^/v&/' <<< "$DASHBOARD_VERSION")
-  else
-    error "The DASHBOARD_VERSION variable should be in a format like v0.00.00, please check."
-  fi
+  DASHBOARD_LATEST=$(wget -qO- "https://api.github.com/repos/naiba/nezha/releases/latest" | awk -F '"' '/"tag_name"/{print $4}')
   wget -O /tmp/dashboard.zip ${GH_PROXY}https://github.com/naiba/nezha/releases/download/$DASHBOARD_LATEST/dashboard-linux-$ARCH.zip
   unzip -o /tmp/dashboard.zip -d /tmp
   chmod +x /tmp/dashboard-linux-$ARCH
   mv -f /tmp/dashboard-linux-$ARCH $WORK_DIR/app
   wget -qO $WORK_DIR/cloudflared ${GH_PROXY}https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$ARCH
-  wget -O $WORK_DIR/nezha-agent.zip ${GH_PROXY}https://github.com/nezhahq/agent/releases/download/v0.20.5/nezha-agent_linux_$ARCH.zip
+  wget -O $WORK_DIR/nezha-agent.zip ${GH_PROXY}https://github.com/nezhahq/agent/releases/latest/download/nezha-agent_linux_$ARCH.zip
   unzip -o $WORK_DIR/nezha-agent.zip -d $WORK_DIR/
   rm -rf $WORK_DIR/nezha-agent.zip /tmp/dist /tmp/dashboard.zip
 
@@ -221,7 +215,6 @@ WORK_DIR=$WORK_DIR
 TEMP_DIR=/tmp/restore_temp
 NO_ACTION_FLAG=/tmp/flag
 IS_DOCKER=1
-DASHBOARD_VERSION=$DASHBOARD_VERSION
 
 ########
 EOF
