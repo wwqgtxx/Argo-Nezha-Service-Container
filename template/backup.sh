@@ -132,14 +132,12 @@ if [[ "${DASHBOARD_UPDATE}${CLOUDFLARED_UPDATE}${IS_BACKUP}${FORCE_UPDATE}" =~ t
   if [ "$IS_BACKUP" = 'true' ]; then
     # 设置 git 环境变量，减少系统开支
     if [ "$IS_DOCKER" != 1 ]; then
-      cmd_systemctl disable >/dev/null 2>&1
       git config --global core.bigFileThreshold 1k
       git config --global core.compression 0
       git config --global advice.detachedHead false
       git config --global pack.threads 1
       git config --global pack.windowMemory 50m
     fi
-    sleep 10
 
     # 克隆现有备份库
     [ -d /tmp/$GH_REPO ] && rm -rf /tmp/$GH_REPO
@@ -180,7 +178,5 @@ fi
 if [ "$IS_DOCKER" = 1 ]; then
   [ $(supervisorctl status all | grep -c "RUNNING") = $(grep -c '\[program:.*\]' /etc/supervisor/conf.d/damon.conf) ] && info "\n All programs started! \n" || error "\n Failed to start program! \n"
 else
-  cmd_systemctl enable >/dev/null 2>&1
-  sleep 2
   [ "$(systemctl is-active nezha-dashboard)" = 'active' ] && info "\n Nezha dashboard started! \n" || error "\n Failed to start Nezha dashboard! \n"
 fi
